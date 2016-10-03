@@ -23,6 +23,7 @@
 
 import unittest
 
+from past.builtins import long
 
 class ThreadsTestCase(unittest.TestCase):
 
