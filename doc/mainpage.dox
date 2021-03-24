@@ -16,7 +16,10 @@ The class \link lsstDebug \endlink can be used to turn on debugging output in a 
 the variable \c lsstDebug.Info("lsst.meas.astrom.astrom").debug is used to control debugging output from
 the lsst.meas.astrom.astrom module.
 
-It is always safe to interrogate \c lsstDebug;  for example \c lsstDebug.Info("Robert.Hugh.Lupton").isBadPerson will return False.
+You may interrogate \c lsstDebug for any string in \c sys.modules, i.e. for the \c \__name__ of any package
+that has been imported;  for example, if the \c Robert.Hugh.Lupton package is loaded then
+\c lsstDebug.Info("Robert.Hugh.Lupton").parameter will return False for any named parameter that has not
+already been set to True elsewhere.
 
 The convention is that the name ("lsst.meas.astrom.astrom") is the \c \__name__ of the module, so the
 source code will typically look something like:
@@ -36,12 +39,12 @@ def DebugInfo(name):
     di = lsstDebug.getInfo(name)        # N.b. lsstDebug.Info(name) would call us recursively
     if name == "foo":
         di.display = True
-        
+
     return di
-    
+
 lsstDebug.Info = DebugInfo
 \endcode
-into a file \b debug.py and 
+into a file \b debug.py available in the \c PYTHONPATH and
 \code
     import lsstDebug
 
