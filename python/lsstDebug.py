@@ -67,7 +67,12 @@ class Info:
     ----------
     modname : `str`
         Module name.
-"""
+
+    Raises
+    ------
+    KeyError :
+        Raised if ``modname`` is not loaded.
+    """
     def __init__(self, modname):
         import sys
         self.__dict__["_dict"] = sys.modules[modname].__dict__
