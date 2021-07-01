@@ -53,7 +53,7 @@ T* loadSymbol(
     std::string const& symName          ///< Symbol name
     )
 {
-    void* lib = dlopen(getLibraryFilename(libName).c_str(), RTLD_LAZY | RTLD_DEEPBIND);
+    void* lib = dlopen(getLibraryFilename(libName).c_str(), RTLD_NOW | RTLD_GLOBAL | RTLD_DEEPBIND);
     if (!lib) {
         throw LibraryException(libName);
     }

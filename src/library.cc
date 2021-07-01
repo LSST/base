@@ -36,7 +36,7 @@ std::string getLibraryFilename(std::string const& name)
 
 bool canLoadLibrary(std::string const& libName)
 {
-    return dlopen(getLibraryFilename(libName).c_str(), RTLD_LAZY | RTLD_GLOBAL);
+    return dlopen(getLibraryFilename(libName).c_str(), RTLD_NOW | RTLD_GLOBAL);
 }
 
 
