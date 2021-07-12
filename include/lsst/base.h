@@ -30,23 +30,6 @@
 #include <memory>
 
 /**
- * A shared pointer to an object
- *
- * \note Using this macro is preferable to the Ptr typedef in type T as no definition of T need be provided,
- * a forward definition (<tt>class T;</tt>) is sufficient
- *
- * \sa CONST_PTR
- */
-#define LSST_WHITESPACE /* White space to avoid swig converting vector<PTR(XX)> into vector<shared_ptr<XX>> */
-#define PTR(...) std::shared_ptr<__VA_ARGS__ LSST_WHITESPACE > LSST_WHITESPACE
-/**
- * A shared pointer to a const object
- *
- * \sa PTR
- */
-#define CONST_PTR(...) std::shared_ptr<const __VA_ARGS__ LSST_WHITESPACE > LSST_WHITESPACE
-
-/**
  * Make a symbol visible even if visiblity is hidden (e.g. for pybind11 modules)
  *
  * This implementation works for gcc and clang; it has not been tested for other compilers
