@@ -24,14 +24,24 @@ bool loadOpenBlas() {
         return true;
     }
 
+    // Conda names the openblas library with .so.0 on Linux and .dylib
+    // on macOS.  Try each of them explicitly, as we don't want to
+    // accidentally find a non-conda .so version.
     try {
-        getOpenBlasThreads = loadSymbol<Getter>("libopenblas", "goto_get_num_procs");
+        getOpenBlasThreads = loadSymbol<Getter>("libopenblas.so.0", "goto_get_num_procs");
         // Believe it or not, the function which returns the number of threads
         // that OpenBLAS will actually use is called "goto_get_num_procs". The
         // number returned by THIS function, and not "openblas_get_num_threads"
         // nor "openblas_get_num_procs", is modified by calls to
         // "openblas_set_num_threads". Confused? Me too.
-        setOpenBlasThreads = loadSymbol<Setter>("libopenblas", "openblas_set_num_threads");
+        setOpenBlasThreads = loadSymbol<Setter>("libopenblas.so.0", "openblas_set_num_threads");
+        return true;
+    } catch (LibraryException const&) {
+        ;
+    }
+    try {
+        getOpenBlasThreads = loadSymbol<Getter>("libopenblas.dylib", "goto_get_num_procs");
+        setOpenBlasThreads = loadSymbol<Setter>("libopenblas.dylib", "openblas_set_num_threads");
     } catch (LibraryException const&) {
         return false;
     }
