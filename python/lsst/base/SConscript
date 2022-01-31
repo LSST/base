@@ -1,4 +1,3 @@
 # -*- python -*-
 from lsst.sconsUtils import scripts
-scripts.BasicSConscript.pybind11(["threads", "cppimport",
-                                  "versions"], addUnderscore=False)
+scripts.BasicSConscript.pybind11(["threads", "cppimport"], addUnderscore=False)
