@@ -23,3 +23,7 @@ Python API reference
 
 .. automodapi:: lsst.base
    :no-main-docstr:
+   :skip: getCondaPackages
+   :skip: getEnvironmentPackages
+   :skip: getPythonPackages
+   :skip: getVersionFromPythonModule
