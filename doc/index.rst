@@ -10,5 +10,4 @@ base documentation preview
    :maxdepth: 1
 
    lsstDebug/index
-   base/index
    lsst.base/index

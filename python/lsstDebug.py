@@ -40,7 +40,7 @@ class Info:
 
         display = lsstDebug.Info(__name__).display
 
-    will set display to False, unless display has been set with
+    will set display to `False`, unless display has been set with
 
     .. code-block:: python
 
@@ -70,7 +70,7 @@ class Info:
 
     Raises
     ------
-    KeyError :
+    KeyError
         Raised if ``modname`` is not loaded.
     """
     def __init__(self, modname):
@@ -95,7 +95,7 @@ getInfo = Info
 def getDebugFrame(debugDisplay, name):
     """
     Attempt to extract a frame for displaying a product called ``name``
-    from the ```debugDisplay`` variable.
+    from the ``debugDisplay`` variable.
 
     Per the above, an instance of `Info` can return an arbitrary object
     (or nothing) as its ``display`` attribute. It is convenient -- though not
@@ -108,7 +108,7 @@ def getDebugFrame(debugDisplay, name):
     Parameters
     ----------
     debugDisplay : `object`
-        The contents of lsstDebug.Info(__name__).display.
+        The contents of ``lsstDebug.Info(__name__).display``.
     name : `str`
         The name of the data product to be displayed.
 
