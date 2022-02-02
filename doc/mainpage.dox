@@ -4,65 +4,7 @@ namespace lsst {
 
 \section baseIntro Introduction
 
-Functionality that shgould always be available to any LSST code
-
-- \ref baseDebug
-*/
-
-/**
-\page baseDebug  Using lsstDebug to control debugging output
-
-The class \link lsstDebug \endlink can be used to turn on debugging output in a non-intrusive way.  For example,
-the variable \c lsstDebug.Info("lsst.meas.astrom.astrom").debug is used to control debugging output from
-the lsst.meas.astrom.astrom module.
-
-You may interrogate \c lsstDebug for any string in \c sys.modules, i.e. for the \c \__name__ of any package
-that has been imported;  for example, if the \c Robert.Hugh.Lupton package is loaded then
-\c lsstDebug.Info("Robert.Hugh.Lupton").parameter will return False for any named parameter that has not
-already been set to True elsewhere.
-
-The convention is that the name ("lsst.meas.astrom.astrom") is the \c \__name__ of the module, so the
-source code will typically look something like:
-\code
-    import lsstDebug
-
-    print lsstDebug.Info(__name__).display
-\endcode
-which will print \c False unless \c lsstDebug.Info(\__name__).display has somehow been set to \c True.
-
-Why is this interesting?  Because you can replace \c lsstDebug.Info with your own version, \em e.g.
-if you put
-\code
-import lsstDebug
-
-def DebugInfo(name):
-    di = lsstDebug.getInfo(name)        # N.b. lsstDebug.Info(name) would call us recursively
-    if name == "foo":
-        di.display = True
-
-    return di
-
-lsstDebug.Info = DebugInfo
-\endcode
-into a file \b debug.py available in the \c PYTHONPATH and
-\code
-    import lsstDebug
-
-    print "display is", lsstDebug.Info(__name__).display
-\endcode
-into \b foo.py, then
-\code
-$ python -c "import foo"
-display is False
-\endcode
-but
-\code
-$ python -c "import debug; import foo"
-display is True
-\endcode
-
-The \link lsst.pipe.base.cmdLineTask.CmdLineTask command line task\endlink interface supports a
-flag \c --debug to import \b debug.py from your \c PYTHONPATH
+Functionality that should always be available to any LSST code
 
 */
 }
