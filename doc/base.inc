@@ -909,7 +909,8 @@ EXCLUDE_SYMLINKS       = NO
 ## While pybind11 wrappers should be documented, Doxygen won't do it correctly
 EXCLUDE_PATTERNS       = */.svn \
                          */.sconf_temp \
-                         */python/*.cc
+                         */python/*.cc \
+                         */doc/conf.py
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
