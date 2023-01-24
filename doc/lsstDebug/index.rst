@@ -6,9 +6,8 @@
 lsstDebug
 #########
 
-.. Paragraph that describes what this Python module does and links to related modules and frameworks.
-
-.. Add subsections with toctree to individual topic pages.
+``lsstDebug`` is a tool to help with live debugging of Science Pipelines packages.
+Many `~lsst.pipe.base.Task`\s are configured to show debugging information when certain parameters are set in ``lsstDebug``, for example ``display`` might show some Task-specific images and plots.
 
 .. _lsstDebug-contributing:
 
@@ -23,12 +22,12 @@ You can find Jira issues for this module under the `base <https://jira.lsstcorp.
 Using lsstDebug to control debugging output
 ===========================================
 
-The class `lsstDebug`` can be used to turn on debugging output in a non-intrusive way.
-For example, the variable ``lsstDebug.Info("lsst.meas.astrom.astrom").debug`` is used to control debugging output from the ``lsst.meas.astrom.astrom`` module.
+The ``lsstDebug`` module is used to turn on debugging output and plots without changing the code being executed.
+For example, the variable ``lsstDebug.Info("lsst.meas.astrom.astrometry").debug`` is used to control debugging output from the ``lsst.meas.astrom.astrometry`` module.
 
-You may interrogate `lsstDebug` for any string in `sys.modules`, i.e. for the ``__name__`` of any package that has been imported;  for example, if the ``Robert.Hugh.Lupton`` package is loaded then ``lsstDebug.Info("Robert.Hugh.Lupton").parameter`` will return `False` for any named parameter that has not already been set to True elsewhere.
+You may interrogate `lsstDebug` for any string in `sys.modules`, i.e. for the ``__name__`` of any package that has been imported; for example, if the ``lsst.meas.algorithms`` package is loaded then ``lsstDebug.Info("lsst.meas.algorithms").parameter`` will return `False` unless ``parameter`` has been set to True elsewhere.
 
-The convention is that the name (``lsst.meas.astrom.astrom``) is the  ``__name__`` of the module, so the source code will typically look something like:
+The convention is that the name (e.g. ``lsst.meas.astrom.astrometry``) is the  ``__name__`` of the module, so that in ``astrometry.py`` you can check whether ``display`` was set like this:
 
 .. code-block:: python
 
@@ -36,10 +35,9 @@ The convention is that the name (``lsst.meas.astrom.astrom``) is the  ``__name__
 
    print(lsstDebug.Info(__name__).display)
 
-which will print `False` unless ``lsstDebug.Info(\__name__).display`` has somehow been set to `True`.
+which will print `False` unless ``lsstDebug.Info(__name__).display`` has somehow been set to `True`.
 
-Why is this interesting?
-Because you can replace `lsstDebug.Info` with your own version, *e.g.* if you put
+You can use this to turn on debug parameters in specific packages, by creating a ``debug.py`` file that is available in the ``PYTHONPATH``:
 
 .. code-block:: python
 
@@ -47,7 +45,7 @@ Because you can replace `lsstDebug.Info` with your own version, *e.g.* if you pu
 
    def DebugInfo(name):
        di = lsstDebug.getInfo(name)  # N.b. lsstDebug.Info(name) would call us recursively
-       if name == "foo":
+       if name == "debugExample":
            di.display = True
 
        return di
@@ -55,7 +53,7 @@ Because you can replace `lsstDebug.Info` with your own version, *e.g.* if you pu
 
    lsstDebug.Info = DebugInfo
 
-into a file ``debug.py`` available in the ``PYTHONPATH`` and
+Then, if you have a ``debugExample.py`` module like this:
 
 .. code-block:: python
 
@@ -63,14 +61,14 @@ into a file ``debug.py`` available in the ``PYTHONPATH`` and
 
    print("display is", lsstDebug.Info(__name__).display)
 
-into ``foo.py``, then
+Running without importing `debug.py` will result in ``display==False``:
 
 .. code-block:: bash
 
     $ python -c "import foo"
     display is False
 
-but
+while importing `debug.py` will show:
 
 .. code-block:: bash
 
@@ -79,7 +77,6 @@ but
 
 The ``pipetask run`` command line interface supports a flag ``--debug`` to import ``debug.py`` from your ``PYTHONPATH``.
 
-
 .. _lsstDebug-pyapi:
 
 Python API reference
@@ -87,3 +84,5 @@ Python API reference
 
 .. automodapi:: lsstDebug
    :no-main-docstr:
+   :no-inheritance-diagram:
+
