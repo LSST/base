@@ -20,11 +20,11 @@
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 
-#include "pybind11/pybind11.h"
+#include "nanobind/nanobind.h"
 
 #include "lsst/base/ModuleImporter.h"
 
-namespace py = pybind11;
+namespace nb = nanobind;
 
 namespace lsst {
 namespace base {
@@ -40,7 +40,7 @@ private:
     PythonModuleImporter() {}
 
 protected:
-    virtual bool _import(std::string const& name) const;
+    bool _import(std::string const& name) const override;
 };
 
 bool PythonModuleImporter::_import(std::string const& name) const {
@@ -59,7 +59,7 @@ bool PythonModuleImporter::_import(std::string const& name) const {
 
 void installPythonModuleImporter() { ModuleImporter::install(PythonModuleImporter::get()); }
 
-PYBIND11_MODULE(cppimport, mod) {
+NB_MODULE(cppimport, mod) {
     lsst::base::installPythonModuleImporter();
 }
 
