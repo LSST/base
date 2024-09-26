@@ -77,6 +77,10 @@ while importing `debug.py` will show:
 
 The ``pipetask run`` command line interface supports a flag ``--debug`` to import ``debug.py`` from your ``PYTHONPATH``.
 
+To use lsstDebug when running tests with pytest, put the ``debug.py`` file described above in your package's ``tests/`` directory and ``import debug`` in the test file you are running.
+
+Note that you may need to setup ``display_ds9``, ``display_firefly``, or ``display_astrowidgets`` in order to see the generated debug images.
+
 .. _lsstDebug-pyapi:
 
 Python API reference
